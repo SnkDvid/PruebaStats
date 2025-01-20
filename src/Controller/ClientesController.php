@@ -38,7 +38,7 @@ class ClientesController extends AbstractController
         // Calcular el porcentaje
         $percentageChange = 0;
         if ($totalClientes > 0) {
-            $percentageChange = ($clientesRecientes / $totalClientes) * $totalClientes;
+            $percentageChange = ($clientesRecientes / $totalClientes) * 100;
         }
 
         // Obtener todos los clientes para la tabla
