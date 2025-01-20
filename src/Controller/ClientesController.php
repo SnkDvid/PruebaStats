@@ -26,7 +26,7 @@ class ClientesController extends AbstractController
         $clientesRecientes = $clientesRepository->createQueryBuilder('c')
             ->select('COUNT(c.id)') //equivale a SELECT COUNT(*)
             ->where('c.fechaCreacion >= :fechaInicio') //equivale a WHERE fechaCreacion >= fechaInicio
-            ->setParameter('fechaInicio', $fechaInicio)
+            ->setParameter('fechaInicio', $fechaInicio) //equivale a fechaInicio
             ->getQuery() //equivale a SELECT COUNT(*) FROM clientes WHERE fechaCreacion >= fechaInicio
             ->getSingleScalarResult();
 
