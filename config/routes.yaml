@@ -9,3 +9,19 @@ clientes:
 clientes_create:
     path: /clientes/create
     controller: App\Controller\ClientesController::create
+
+clientes_edit:
+    path: /clientes/edit/{id}
+    controller: App\Controller\ClientesController::edit
+
+clientes_delete:
+    path: /clientes/delete/{id}
+    controller: App\Controller\ClientesController::delete
+
+clientes_activar:
+    path: /clientes/activar/{id}
+    controller: App\Controller\ClientesController::activar
+
+clientes_desactivar:
+    path: /clientes/desactivar/{id}
+    controller: App\Controller\ClientesController::desactivar

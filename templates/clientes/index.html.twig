@@ -52,7 +52,7 @@
             <!-- Mensajes de éxito -->
                 {% include 'messages/success.html.twig' %}
             <!-- FIN Mensajes de éxito -->
-            
+          
              <!-- Botón para crear cliente -->
             <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalCrearCliente">Crear Cliente</button>
             <!-- FIN Botón para crear cliente -->
@@ -66,7 +66,6 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Clientes</h4>
                     <div class="table-responsive">
                       <table class="table" id="clientesTable">
                         <thead>
@@ -77,6 +76,7 @@
                             <th> Celular </th>
                             <th> Estado Civil </th>
                             <th> Estado </th>
+                            <th> Cambiar Estado </th>
                             <th> Acciones </th>
                           </tr>
                         </thead>
@@ -89,7 +89,12 @@
                             <td> {{ Cliente.celular }} </td>
                             <td> {{ Cliente.civil }} </td>
                             <td> {{ Cliente.estado ? '<label class="badge badge-pill badge-success">Activo</label>' : '<label class="badge badge-pill badge-danger">Inactivo</label>' }} </td>
-                            <td> <button class="btn btn-gradient-primary">Editar</button> <button class="btn btn-gradient-danger">Eliminar</button> </td>
+                            <td> {% if Cliente.estado == true %} 
+                            <a href="{{ path('clientes_desactivar', {'id': Cliente.id}) }}" class="btn btn-inverse-danger">Desactivar</a> {% else %} 
+                            <a href="{{ path('clientes_activar', {'id': Cliente.id}) }}" class="btn btn-inverse-primary">Activar</a> {% endif %} 
+                            </td>
+                            <td> <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalEditarCliente" data-id="{{ Cliente.id }}">Editar</button>
+                             <a href="{{ path('clientes_delete', {'id': Cliente.id}) }}" class="btn btn-gradient-danger">Eliminar</a> </td>
                           </tr>
                           {% endfor %}
                         </tbody>
@@ -101,6 +106,9 @@
               </div>
             </div>
           </div>
+          <!-- modalEditarCliente -->
+          {% include 'modals/modalEditarCliente.html.twig' %}
+          <!-- FIN modalEditarCliente -->
           <!-- content-wrapper ends -->
           
           <!-- partial:partials/_footer.html -->
@@ -129,7 +137,7 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
                 },
                 "lengthChange": false,
-                "pageLength": 20,
+                "pageLength": 10,
                 "ordering": true,
                 "info": true,
                 "responsive": true

@@ -1,0 +1,42 @@
+{% for Cliente in Clientes %}
+<div class="modal fade" id="modalEditarCliente" tabindex="-1" aria-labelledby="modalEditarClienteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarClienteLabel">Editar Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('clientes_edit', {'id': Cliente.id}) }}" id="formEditarCliente" method="POST">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" name="Nombre" value="{{ Cliente.nombre }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo</label>
+                        <input type="email" class="form-control" id="correo" name="Correo" value="{{ Cliente.correo }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="celular">Celular</label>
+                        <input type="text" class="form-control" id="celular" name="Celular" value="{{ Cliente.celular }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="civil">Estado Civil</label>
+                        <select class="form-control" id="civil" name="Civil" value="{{ Cliente.civil }}">
+                            <option value="Soltero" {%if Cliente.civil == 'Soltero'%}selected{%endif%}>Soltero</option>
+                            <option value="Casado" {%if Cliente.civil == 'Casado'%}selected{%endif%}>Casado</option>
+                            <option value="Divorciado" {%if Cliente.civil == 'Divorciado'%}selected{%endif%}>Divorciado</option>
+                            <option value="Viudo" {%if Cliente.civil == 'Viudo'%}selected{%endif%}>Viudo</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="clienteId" name="clienteId">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 
+{% endfor %}

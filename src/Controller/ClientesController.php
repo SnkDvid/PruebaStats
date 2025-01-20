@@ -6,24 +6,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Clientes;
 
 class ClientesController extends AbstractController
 {
     #[Route('/clientes', name: 'app_clientes')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $clientesRepository = $entityManager->getRepository(Clientes::class); 
+        $clientes = $entityManager->getRepository(Clientes::class)->findAll();
 
         // Obtener el número total de clientes
-        $totalClientes = $clientesRepository->count([]);
+        $totalClientes = $entityManager->getRepository(Clientes::class)->count([]);
 
         // Obtener la fecha de hace un mes
         $fechaInicio = new \DateTime('-1 month');
 
         // Contar clientes creados en el último mes
-        $clientesRecientes = $clientesRepository->createQueryBuilder('c')
+        $clientesRecientes = $entityManager->getRepository(Clientes::class)->createQueryBuilder('c')
             ->select('COUNT(c.id)') //equivale a SELECT COUNT(*)
             ->where('c.fechaCreacion >= :fechaInicio') //equivale a WHERE fechaCreacion >= fechaInicio
             ->setParameter('fechaInicio', $fechaInicio) //equivale a fechaInicio
@@ -37,7 +37,7 @@ class ClientesController extends AbstractController
         }
 
         // Obtener todos los clientes para la tabla
-        $clientes = $clientesRepository->findAll();
+        $clientes = $entityManager->getRepository(Clientes::class)->findAll();
 
         return $this->render('clientes/index.html.twig', [
             'controller_name' => 'ClientesController',
@@ -48,7 +48,7 @@ class ClientesController extends AbstractController
     }
 
     #[Route('/clientes/create', name: 'app_clientes_create')]
-    public function create(Request $request): Response
+    public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $cliente = new Clientes();
         $cliente->setNombre($request->request->get('Nombre'));
@@ -58,12 +58,67 @@ class ClientesController extends AbstractController
         $cliente->setCivil($request->request->get('Civil'));
         // La fecha de creación se establece automáticamente en el constructor de Clientes
 
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($cliente);
         $entityManager->flush();
 
         $this->addFlash('success', 'Cliente registrado exitosamente.');
 
+        return $this->redirectToRoute('clientes');
+    }
+
+    #[Route('/clientes/edit/{id}', name: 'app_clientes_edit')]
+    public function edit(Request $request, EntityManagerInterface $entityManager, $id): Response
+    {
+        $cliente = $entityManager->getRepository(Clientes::class)->find($id);
+        $cliente->setNombre($request->request->get('Nombre'));
+        $cliente->setCorreo($request->request->get('Correo'));
+        $cliente->setCelular($request->request->get('Celular'));
+        if ($cliente->getEstado() == true) {
+            $cliente->setEstado(true);
+        } else {
+            $cliente->setEstado(false);
+        }
+
+        $cliente->setCivil($request->request->get('Civil'));
+
+        $entityManager->persist($cliente);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Cliente actualizado exitosamente.');
+
+        return $this->redirectToRoute('clientes');
+    }   
+
+    #[Route('/clientes/delete/{id}', name: 'app_clientes_delete')]
+    public function delete(EntityManagerInterface $entityManager, $id): Response
+    {
+        $cliente = $entityManager->getRepository(Clientes::class)->find($id);
+        $entityManager->remove($cliente);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Cliente eliminado exitosamente.');
+        return $this->redirectToRoute('clientes');
+    }
+
+    #[Route('/clientes/activar/{id}', name: 'app_clientes_activar')]
+    public function activar(EntityManagerInterface $entityManager, $id): Response
+    {
+        $cliente = $entityManager->getRepository(Clientes::class)->find($id);
+        $cliente->setEstado(true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Cliente ' . $cliente->getNombre() . ' activado exitosamente.');
+        return $this->redirectToRoute('clientes');
+    }
+
+    #[Route('/clientes/desactivar/{id}', name: 'app_clientes_desactivar')]
+    public function desactivar(EntityManagerInterface $entityManager, $id): Response
+    {
+        $cliente = $entityManager->getRepository(Clientes::class)->find($id);
+        $cliente->setEstado(false);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Cliente ' . $cliente->getNombre() . ' desactivado exitosamente.');
         return $this->redirectToRoute('clientes');
     }
 }
