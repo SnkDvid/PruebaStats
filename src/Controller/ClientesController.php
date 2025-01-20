@@ -17,7 +17,12 @@ class ClientesController extends AbstractController
         $clientes = $entityManager->getRepository(Clientes::class)->findAll();
 
         // Obtener el número total de clientes
-        $totalClientes = $entityManager->getRepository(Clientes::class)->count([]);
+        $totalClientes = $entityManager->getRepository(Clientes::class)->createQueryBuilder('c')
+            ->select('COUNT(c.id)') //equivale a SELECT COUNT(*)
+            ->andWhere('c.Estado = :Estado') //equivale a WHERE estado = true'
+            ->setParameter('Estado', true) //equivale a estado = true
+            ->getQuery() //equivale a SELECT COUNT(*) FROM clientes WHERE estado = true
+            ->getSingleScalarResult();
 
         // Obtener la fecha de hace un mes
         $fechaInicio = new \DateTime('-1 month');
