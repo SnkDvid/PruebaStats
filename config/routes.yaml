@@ -1,3 +1,11 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+dashboard:
+    path: /
+    controller: App\Controller\DashboardController::index
+
+clientes:
+    path: /clientes
+    controller: App\Controller\ClientesController::index
+
+clientes_create:
+    path: /clientes/create
+    controller: App\Controller\ClientesController::create

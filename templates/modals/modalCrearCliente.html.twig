@@ -1,0 +1,40 @@
+<div class="modal fade" id="modalCrearCliente" tabindex="-1" aria-labelledby="modalCrearCliente" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCrearCliente">Crear Cliente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ path('clientes_create') }}" method="POST">
+                    <div class="mb-3">
+                        <label for="Nombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="Nombre" name="Nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Correo" class="form-label">Correo</label>
+                        <input type="text" class="form-control" id="Correo" name="Correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Celular" class="form-label">Celular</label>
+                        <input type="text" class="form-control" id="Celular" name="Celular">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Civil" class="form-label">Estado Civil</label>
+                            <select class="form-control" id="Civil" name="Civil">
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="Soltero">Soltero</option>
+                            <option value="Casado">Casado</option>
+                            <option value="Divorciado">Divorciado</option>
+                            <option value="Viudo">Viudo</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-gradient-primary">Crear</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
