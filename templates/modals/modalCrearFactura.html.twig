@@ -1,40 +1,82 @@
 <div class="modal fade" id="modalCrearFactura" tabindex="-1" role="dialog" aria-labelledby="modalCrearFactura" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalCrearFactura">Crear Factura</h5>
+        <h6 class="modal-title mb-2" id="modalCrearFactura">Crear Factura</h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form action="{{ path('facturas_create') }}" method="post">
-            <div class="form-group">
-                <label for="numeracion">Numeracion</label>
+          <div class="row">
+            
+            <div class="col-md-4">
+              <h6 class="mb-3">Información Básica</h6>
+              <div class="form-group mb-3">
+                <label for="numeracion">Numeración</label>
                 <input type="text" name="rangoNumeracion" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="nombreProducto">Nombre Producto</label>
-                <input type="text" name="nombreProducto" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="cantidadProducto">Cantidad Producto</label>
-                <input type="text" name="cantidadProducto" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="total">Total</label>
-                <input type="text" name="total" class="form-control">
-            </div>
-            <div class="form-group">
+              </div>
+              <div class="form-group mb-4">
                 <label for="cliente">Cliente</label>
                 <select name="cliente" class="form-control">
-                    {% for cliente in clientes %}
-                        <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
-                    {% endfor %}
+                  {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nombre }}</option>
+                  {% endfor %}
                 </select>
+              </div>
+              <div class="form-group mb-3">
+                <label for="razonSocial">Razón Social</label>
+                <input type="text" name="razonSocial" class="form-control">
+              </div>
+              <div class="form-group mb-3">
+                <label for="nombreComercial">Nombre Comercial</label>
+                <input type="text" name="nombreComercial" class="form-control">
+              </div>
             </div>
-            <button type="submit" class="btn btn-primary">Crear</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+            <div class="col-md-4">
+              <h6 class="mb-3">Información del Producto</h6>
+              <div class="form-group mb-3">
+                <label for="nombreProducto">Nombre Producto</label>
+                <input type="text" name="nombreProducto" class="form-control">
+              </div>
+              <div class="form-group mb-3">
+                <label for="cantidadProducto">Cantidad Producto</label>
+                <input type="text" name="cantidadProducto" class="form-control">
+              </div>
+              <div class="form-group mb-3">
+                <label for="total">Total</label>
+                <input type="text" name="total" class="form-control">
+              </div>
+              <div class="form-group mb-3">
+                <label for="organizacion">Organización</label>
+                <input type="text" name="organizacion" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <h6 class="mb-3">Información Tributaria</h6>
+              <div class="form-group mb-3">
+                <label for="tipoTributario">Tipo Tributario</label>
+                <input type="text" name="tipoTributario" class="form-control">
+              </div>
+              <div class="form-group mb-3">
+                <label for="tipoMunicipio">Tipo Municipio</label>
+                <input type="text" name="tipoMunicipio" class="form-control">
+              </div>
+            </div>
+
+          </div>
+          
+          <div class="row mt-4">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary">Crear</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
+
+<script src="{{ asset('js/facturas.js') }}"></script>

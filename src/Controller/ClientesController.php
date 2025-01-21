@@ -57,6 +57,7 @@ class ClientesController extends AbstractController
     {
         $cliente = new Clientes();
         $cliente->setNombre($request->request->get('Nombre'));
+        $cliente->setDireccion($request->request->get('Direccion'));
         $cliente->setCorreo($request->request->get('Correo'));
         $cliente->setCelular($request->request->get('Celular'));
         $cliente->setEstado($request->request->get('Estado') == 0);
@@ -76,6 +77,7 @@ class ClientesController extends AbstractController
     {
         $cliente = $entityManager->getRepository(Clientes::class)->find($id);
         $cliente->setNombre($request->request->get('Nombre'));
+        $cliente->setDireccion($request->request->get('Direccion'));
         $cliente->setCorreo($request->request->get('Correo'));
         $cliente->setCelular($request->request->get('Celular'));
         if ($cliente->getEstado() == true) {

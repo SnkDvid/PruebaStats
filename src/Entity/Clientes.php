@@ -19,6 +19,9 @@ class Clientes
     #[ORM\Column(length: 255)]
     private ?string $Nombre;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Direccion;
+
     #[ORM\Column(length: 30)]
     private ?string $Correo;
 
@@ -56,6 +59,18 @@ class Clientes
     public function setNombre(string $Nombre): static
     {
         $this->Nombre = $Nombre;
+
+        return $this;
+    }
+
+    public function getDireccion(): ?string
+    {
+        return $this->Direccion;
+    }
+
+    public function setDireccion(string $Direccion): static
+    {
+        $this->Direccion = $Direccion;
 
         return $this;
     }

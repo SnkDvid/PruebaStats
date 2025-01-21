@@ -22,3 +22,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\ApiFactusService:
+        arguments:
+            $apiUrl: '%env(API_BASE_URL)%'
+            $apiEmail: '%env(API_EMAIL)%'
+            $apiPassword: '%env(API_PASSWORD)%'
+            $clientId: '%env(API_CLIENT_ID)%'
+            $clientSecret: '%env(API_CLIENT_SECRET)%'

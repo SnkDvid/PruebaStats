@@ -78,6 +78,11 @@
                             <th> Correo </th>
                             <th> Celular </th>
                             <th> Estado Civil </th>
+                            <th> Razón Social </th>
+                            <th> Nombre Comercial </th>
+                            <th> Organización </th>
+                            <th> Tipo Tributario </th>
+                            <th> Tipo Municipio </th>
                             <th> Acciones </th>
                           </tr>
                         </thead>
@@ -90,9 +95,15 @@
                             <td> {{ Factura.CantidadProducto }} </td>
                             <td> {{ Factura.Total }} </td>
                             <td> {{ Factura.cliente.nombre }} </td>
+                            <td> {{ Factura.cliente.direccion }} </td>
                             <td> {{ Factura.cliente.correo }} </td>
                             <td> {{ Factura.cliente.celular }} </td>
                             <td> {{ Factura.cliente.civil }} </td>
+                            <td> {{ Factura.RazonSocial }} </td>
+                            <td> {{ Factura.NombreComercial }} </td>
+                            <td> {{ Factura.Organizacion }} </td>
+                            <td> {{ Factura.TipoTributario }} </td>
+                            <td> {{ Factura.TipoMunicipio }} </td>  
                             <td>  
                             <button class="btn btn-gradient-primary">Editar</button>
                             <button class="btn btn-gradient-danger">Eliminar</button>

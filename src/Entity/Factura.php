@@ -17,7 +17,22 @@ class Factura
     #[ORM\Column(type: Types::BIGINT)]
     private ?int $RangoNumeracion;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 50)]
+    private ?string $RazonSocial;
+
+    #[ORM\Column(length: 50)]
+    private ?string $NombreComercial;
+
+    #[ORM\Column(length: 50)]
+    private ?string $Organizacion;
+
+    #[ORM\Column(length: 50)]
+    private ?string $TipoTributario;
+
+    #[ORM\Column(length: 50)]
+    private ?string $TipoMunicipio;
+
+    #[ORM\Column(length: 50)]
     private ?string $NombreProducto;
 
     #[ORM\Column(length: 255)]
@@ -52,6 +67,66 @@ class Factura
     public function setRangoNumeracion(int $RangoNumeracion): self
     {
         $this->RangoNumeracion = $RangoNumeracion;
+
+        return $this;
+    }
+
+    public function getRazonSocial(): ?string
+    {
+        return $this->RazonSocial;
+    }
+
+    public function setRazonSocial(string $RazonSocial): self
+    {
+        $this->RazonSocial = $RazonSocial;
+
+        return $this;
+    }
+
+    public function getNombreComercial(): ?string
+    {
+        return $this->NombreComercial;
+    }
+
+    public function setNombreComercial(string $NombreComercial): self
+    {
+        $this->NombreComercial = $NombreComercial;
+
+        return $this;
+    }
+
+    public function getOrganizacion(): ?string
+    {
+        return $this->Organizacion;
+    }
+
+    public function setOrganizacion(string $Organizacion): self
+    {
+        $this->Organizacion = $Organizacion;
+
+        return $this;
+    }
+
+    public function getTipoTributario(): ?string
+    {
+        return $this->TipoTributario;
+    }
+
+    public function setTipoTributario(string $TipoTributario): self
+    {
+        $this->TipoTributario = $TipoTributario;
+
+        return $this;
+    }
+
+    public function getTipoMunicipio(): ?string
+    {
+        return $this->TipoMunicipio;
+    }
+
+    public function setTipoMunicipio(string $TipoMunicipio): self
+    {
+        $this->TipoMunicipio = $TipoMunicipio;
 
         return $this;
     }
