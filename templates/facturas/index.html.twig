@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facturas{% endblock %}
+
+{% block body %}
+
+
+<div class="container-scroller">
+  <!-- barra de carga -->
+  {% include 'barra/barra.html.twig' %} 
+  <!-- FIN barra de carga -->
+
+      <!-- partial:partials/_navbar.html -->
+      {% include 'layouts/navbar.html.twig' %}
+      <!-- partial -->
+
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        {% include 'layouts/sidebar.html.twig' %}
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-file"></i>
+                </span> Facturas
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Resumen <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-4 stretch-card grid-margin">
+                <div class="card bg-gradient-danger card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="/dist/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Facturas Creadas <i class="mdi mdi-chart-line mdi-24px float-end"></i>
+                    </h4>
+                    <h1 class="mb-5"></h1>
+                    <h6 class="card-text">
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Mensajes de éxito -->
+                {% include 'messages/success.html.twig' %}
+            <!-- FIN Mensajes de éxito -->
+          
+             <!-- Botón para crear cliente -->
+            <button class="btn btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#modalCrearFactura">Crear Factura</button>
+            <!-- FIN Botón para crear cliente -->
+
+            {% if facturas is empty %}
+                <div class="alert alert-info mt-4">
+                    No hay facturas registradas, Registra una ahora!
+                </div>
+            {% else %}
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table pagination-separated" id="facturasTable">
+                        <thead>
+                          <tr>
+                            <th> ID </th>
+                            <th> Numeracion </th>
+                            <th> Nombre Producto </th>
+                            <th> Cantidad Producto </th>
+                            <th> Total </th>
+                            <th> Cliente </th>
+                            <th> Correo </th>
+                            <th> Celular </th>
+                            <th> Estado Civil </th>
+                            <th> Acciones </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for Factura in facturas %}
+                          <tr>
+                            <td> {{ Factura.id }} </td>
+                            <td> {{ Factura.RangoNumeracion }} </td>
+                            <td> {{ Factura.NombreProducto }} </td>
+                            <td> {{ Factura.CantidadProducto }} </td>
+                            <td> {{ Factura.Total }} </td>
+                            <td> {{ Factura.cliente.nombre }} </td>
+                            <td> {{ Factura.cliente.correo }} </td>
+                            <td> {{ Factura.cliente.celular }} </td>
+                            <td> {{ Factura.cliente.civil }} </td>
+                            <td>  
+                            <button class="btn btn-gradient-primary">Editar</button>
+                            <button class="btn btn-gradient-danger">Eliminar</button>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                        {% endfor %}
+                      </table>
+                    {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- modalEditarCliente -->
+          
+          <!-- FIN modalEditarCliente -->
+          <!-- content-wrapper ends -->
+          
+          <!-- partial:partials/_footer.html -->
+          {% include 'layouts/footer.html.twig' %}
+          <!-- partial -->
+        </div>
+
+
+        <!-- Modal para crear cliente -->
+        {% include 'modals/modalCrearFactura.html.twig' %}
+        <!-- FIN Modal para crear cliente -->
+
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#facturasTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                },
+                "lengthChange": false,
+                "pageLength": 10,
+                "ordering": true,
+                "info": true,
+                "responsive": true,
+            });
+        });
+    </script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
+        <!-- barra de carga -->
+        {% include 'barra/barrajs.html.twig' %} 
+        <!-- FIN barra de carga -->
+        
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% include 'barra/barrastyles.html.twig' %}
+{% endblock %}

@@ -25,3 +25,12 @@ clientes_activar:
 clientes_desactivar:
     path: /clientes/desactivar/{id}
     controller: App\Controller\ClientesController::desactivar
+
+facturas:
+    path: /facturas
+    controller: App\Controller\FacturasController::index
+
+facturas_create:
+    path: /facturas/create
+    controller: App\Controller\FacturasController::create
+
