@@ -8,13 +8,20 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Clientes;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ClientesController extends AbstractController
 {
     #[Route('/clientes', name: 'app_clientes')]
-    public function index(EntityManagerInterface $entityManager): Response
+    public function index(EntityManagerInterface $entityManager, Request $request, PaginatorInterface $paginator): Response
     {
-        $clientes = $entityManager->getRepository(Clientes::class)->findAll();
+       $queryBuilder = $entityManager->getRepository(Clientes::class)->createQueryBuilder('c'); 
+       $query = $queryBuilder->getQuery();
+       $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1),
+        10
+       );
 
         // Obtener el número total de clientes
         $totalClientes = $entityManager->getRepository(Clientes::class)->createQueryBuilder('c')
@@ -46,7 +53,7 @@ class ClientesController extends AbstractController
 
         return $this->render('clientes/index.html.twig', [
             'controller_name' => 'ClientesController',
-            'Clientes' => $clientes,
+            'Clientes' => $pagination,
             'totalClientes' => $totalClientes,
             'percentageChange' => $percentageChange,
         ]);
